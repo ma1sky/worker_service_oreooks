@@ -1,3 +1,5 @@
+import { Day } from "@prisma/client";
+
 export const WeekType = {
   FIRST_NUMERATOR: 0,
   FIRST_DENOMINATOR: 1,
@@ -12,15 +14,13 @@ export const WeekTypeLabel = {
   3: "2з",
 };
 
-export const Day = [
-  "sunday",
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-  "saturday"
-];
+export interface ScheduleDTO {
+  semester: string;
+  week: number;
+  weekType: number;
+  dayOfWeek: Day;
+  lessons: LessonDTO[];
+}
 
 export interface LessonDTO {
   lesson_number: number
@@ -28,12 +28,4 @@ export interface LessonDTO {
   lesson_type: string
   teacher: string
   classroom: string
-};
-
-export interface ScheduleDTO {
-  semester: string
-  week: number
-  weekType: number
-  dayOfWeek: string
-  lessons: LessonDTO[]
 };

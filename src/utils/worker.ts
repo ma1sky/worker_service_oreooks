@@ -1,4 +1,14 @@
-import { Day } from '../models/worker.model.js'
+import { Day } from "@prisma/client";
+ 
+const days: Day[] = [
+ Day.Monday,
+ Day.Tuesday,
+ Day.Wednesday,
+ Day.Thursday,
+ Day.Friday,
+ Day.Saturday,
+ Day.Sunday
+];
 
 export function createAuthHeader(login:string,password:string): string {
   const base64 = Buffer
@@ -12,11 +22,18 @@ export function createTokenHeader(token:string): string {
     return `Bearer ${token}`;
 };
 
-const getDayByOffset = (offset: number): string  => {
-  const index = new Date().getDay();
-  return Day[(index + offset) % 7]!;
+const getDayByOffset = (offset = 0): Day => {
+  let jsDay = new Date().getDay();
+  jsDay = jsDay === 0 ? 6 : jsDay - 1;
+  return days[(jsDay + offset) % 7]!;
+
 };
 
-export const getTodayDay = (): string => getDayByOffset(0);
+export const getTodayDay = () =>
+  getDayByOffset();
 
-export const getTomorrowDay = (): string => getDayByOffset(1);
+export const getTomorrowDay = () =>
+  getDayByOffset(1);
+
+export const getTodayYesterday = () =>
+  getDayByOffset(-1);

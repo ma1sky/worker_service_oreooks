@@ -1,7 +1,8 @@
 import axios from 'axios';
-import {ORIOKS_GROUP_URL, ORIOKS_LESSONS_TYPE, ORIOKS_WEEK_TYPE} from '../config/worker.config.js'
-import { createTokenHeader } from '../utils/worker.js'
-import type { ScheduleDTO, LessonDTO } from '../models/worker.model.js'
+import {ORIOKS_GROUP_URL, ORIOKS_LESSONS_TYPE, ORIOKS_WEEK_TYPE} from '../config/worker.config.js';
+import { createTokenHeader } from '../utils/worker.js';
+import type { ScheduleDTO, LessonDTO } from '../models/worker.model.js';
+import { Day } from "@prisma/client";
 
 export const getSemesterStart = async (token:string) => {
     const tokenHeader = createTokenHeader(token);
@@ -101,57 +102,52 @@ export const getIdGroup = async (token:string) => {
         throw e;
     }
 };
-export const getSchedule = async (token: string): Promise<ScheduleDTO> => {
+export const getSchedule = async (token: string): Promise<ScheduleDTO[]> => {
     const tokenHeader = createTokenHeader(token);
     const idGroup = await getIdGroup(token);
     try { 
-        const response = await axios.get(`${ORIOKS_GROUP_URL}/${idGroup}`, {
+        const { data } = await axios.get(`${ORIOKS_GROUP_URL}/${idGroup}`, {
         headers: {
             'Accept': 'application/json',
             'Authorization': tokenHeader,
             'User-Agent': 'bot_oreooks/0.1'
         }});
-        const data = response.data;
+        const weekKey = Object
+        .keys(data)
+        .find(k => !isNaN(Number(k)));
 
-        const weekKey = Object.keys(data)
-        .find(key => !isNaN(Number(key)));
         if (!weekKey) {
-        throw new Error("Week not found");
+            throw new Error("Week not found");
         }
+
         const weekData = data[weekKey];
 
-        const dayKey = Object.keys(weekData)[0];
-        
-        if (!dayKey) {
-            throw new Error("Day not found");
-        }
+        const schedules: ScheduleDTO[] =
+            Object.entries(weekData).map(
+                ([dayKey, rawLessons]: any) => {
 
-        const dayData = weekData[dayKey];
+                const lessons: LessonDTO[] =
+                    Object.entries(rawLessons).map(
+                    ([lessonNumber, lesson]: any) => ({
+                        lesson_number:Number(lessonNumber),
+                        lesson_name:lesson.name,
+                        lesson_type:lesson.type,
+                        teacher:lesson.teacher,
+                        classroom:lesson.classroom
+                    })
+                    );
 
-        const lessons: LessonDTO[] = Object.keys(dayData)
-        .map((lessonNumber) => {
+                return {
+                    semester:data.semester,
+                    week:Number(weekKey),
+                    weekType:Number(weekKey),
+                    dayOfWeek:dayKey as Day,
+                    lessons
+                };
+                }
+            );
 
-            const lesson = dayData[lessonNumber];
-
-            return {
-            lesson_number: Number(lessonNumber),
-            lesson_name: lesson.name,
-            lesson_type: lesson.type,
-            teacher: lesson.teacher,
-            classroom: lesson.classroom
-            };
-
-        });
-
-        const schedule: ScheduleDTO = {
-            semester: data.semester,
-            week: Number(weekKey),
-            weekType: Number(weekKey),
-            dayOfWeek: dayKey,
-            lessons: lessons
-        };
-
-        return schedule;
+        return schedules;
 
     } catch(e: any) {
         if (e.response.status=== 400) {

@@ -1,13 +1,13 @@
 import type { Request, Response } from "express";
-import { getToken } from '../services/orioks.auth.service.js';
-import { createUser } from '../utils/user.db.js';
+import { userService } from '../services/orioks.auth.service.js';
+import { user } from '../repositoryes/user.repository.js';
 
 export const createUser = async (req:Request, res:Response) => {
   try {
     const { tgId, login, password } = req.body;
 
-    const token = await getToken(login, password);
-    await createUser(tgId, token);
+    const token = await userService.getToken(login, password);
+    await user.createUser(tgId, token);
 
     return res.status(201).json({
       message: "User created"
