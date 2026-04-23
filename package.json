@@ -1,0 +1,26 @@
+{
+  "type": "module",
+  "name": "db_service_oreooks",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "Ksenii",
+  "main": "db.ts",
+  "dependencies": {
+    "@prisma/client": "^7.8.0",
+    "axios": "^1.15.2",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "prisma": "^7.7.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.6.0",
+    "@types/pg": "^8.20.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^6.0.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
