@@ -11,7 +11,7 @@ export const getToken = async (login:string, password:string) => {
         headers: {
             'Accept': 'application/json',
             'Authorization': authHeader,
-            'User-Agent': 'bot_oreooks/0.1'
+            'User-Agent': 'bot_oreooks/0.1 Node.js/24.14.1'
         }});
 
         return response.data.token;

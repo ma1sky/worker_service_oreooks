@@ -11,7 +11,7 @@ export const getSemesterStart = async (token:string) => {
         headers: {
             'Accept': 'application/json',
             'Authorization': tokenHeader,
-            'User-Agent': 'bot_oreooks/0.1'
+            'User-Agent': 'bot_oreooks/0.1 Node.js/24.14.1'
         }});
 
         return response.data.semester_start;
@@ -51,7 +51,7 @@ export const getLessonTime = async (token:string) => {
         headers: {
             'Accept': 'application/json',
             'Authorization': tokenHeader,
-            'User-Agent': 'bot_oreooks/0.1'
+            'User-Agent': 'bot_oreooks/0.1 Node.js/24.14.1'
         }});
     return response.data;
     } catch(e: any) {
@@ -80,7 +80,7 @@ export const getIdGroup = async (token:string) => {
         headers: {
             'Accept': 'application/json',
             'Authorization': tokenHeader,
-            'User-Agent': 'bot_oreooks/0.1'
+            'User-Agent': 'bot_oreooks/0.1 Node.js/24.14.1'
         }});
     return response.data.id;
     } catch(e: any) {
@@ -110,7 +110,7 @@ export const getSchedule = async (token: string): Promise<ScheduleDTO[]> => {
         headers: {
             'Accept': 'application/json',
             'Authorization': tokenHeader,
-            'User-Agent': 'bot_oreooks/0.1'
+            'User-Agent': 'bot_oreooks/0.1 Node.js/24.14.1'
         }});
         const weekKey = Object
         .keys(data)
