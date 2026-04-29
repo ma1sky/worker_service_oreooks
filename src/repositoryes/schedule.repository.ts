@@ -1,6 +1,6 @@
-import { prisma } from './db.js'
+import { prisma } from './db'
 import { Day } from "@prisma/client";
-import type { ScheduleDTO} from '../models/worker.model.js'
+import type { ScheduleDTO} from '../models/worker.model'
 
 export const createSchedule = async ( tgId:number, schedule: ScheduleDTO) => {
   return prisma.schedule.create({

@@ -1,8 +1,8 @@
 import type { Request, Response } from 'express'
-import * as scheduleService from '../services/orioks.schedule.service.js';
-import * as scheduleDb from '../repositoryes/schedule.repository.js';
-import * as userRepo from '../repositoryes/user.repository.js'
-import * as worker from '../utils/worker.js'
+import * as scheduleService from '../services/orioks.schedule.service';
+import * as scheduleDb from '../repositoryes/schedule.repository';
+import * as userRepo from '../repositoryes/user.repository'
+import * as worker from '../utils/worker'
 
 export const getSchedule = async ( req:Request, res:Response) => {
  try {
@@ -56,7 +56,7 @@ export const getScheduleDay = async ( req:Request, res:Response ) => {
     return res.status(404).json({message:"Token not found"});
   }
 
-  const weekType =await scheduleService.getWeekType(token);
+  const weekType = await scheduleService.getWeekType(token);
 
   const day = type === "tomorrow"? worker.getTomorrowDay(): worker.getTodayDay();
 

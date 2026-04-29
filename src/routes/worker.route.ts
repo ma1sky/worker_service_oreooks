@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { createUser } from "../controllers/auth.controller.js";
-import { getSchedule, getScheduleDay } from '../controllers/schedule.controller.js'
+import { createUser } from "../controllers/auth.controller";
+import { getSchedule, getScheduleDay } from '../controllers/schedule.controller'
 const router = Router();
 
 router.get("/auth", createUser);

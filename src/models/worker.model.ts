@@ -1,10 +1,10 @@
 import { Day } from "@prisma/client";
 
-export const WeekType = {
-  FIRST_NUMERATOR: 0,
-  FIRST_DENOMINATOR: 1,
-  SECOND_NUMERATOR: 2,
-  SECOND_DENOMINATOR: 3,
+export enum WeekType {
+  FIRST_NUMERATOR,
+  FIRST_DENOMINATOR,
+  SECOND_NUMERATOR,
+  SECOND_DENOMINATOR,
 };
 
 export const WeekTypeLabel = {

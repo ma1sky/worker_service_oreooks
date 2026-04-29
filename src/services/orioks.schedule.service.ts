@@ -1,7 +1,7 @@
 import axios from 'axios';
-import {ORIOKS_GROUP_URL, ORIOKS_LESSONS_TYPE, ORIOKS_WEEK_TYPE} from '../config/worker.config.js';
-import { createTokenHeader } from '../utils/worker.js';
-import type { ScheduleDTO, LessonDTO } from '../models/worker.model.js';
+import {ORIOKS_GROUP_URL, ORIOKS_LESSONS_TYPE, ORIOKS_WEEK_TYPE} from '../config/worker.config';
+import { createTokenHeader } from '../utils/worker';
+import type { ScheduleDTO, LessonDTO } from '../models/worker.model';
 import { Day } from '@prisma/client'
 
 export const getSemesterStart = async (token:string) => {

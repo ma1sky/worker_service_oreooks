@@ -1,7 +1,7 @@
 import express from 'express';
-import routes from "./routes/worker.route.js";
+import routes from "./routes/worker.route";
 
-import { PORT } from './config/worker.config.js';
+import { PORT } from './config/worker.config';
 
 const app = express();
 

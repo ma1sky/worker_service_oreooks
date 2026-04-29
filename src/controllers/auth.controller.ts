@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import * as userService from '../services/orioks.auth.service.js';
-import * as user from '../repositoryes/user.repository.js';
+import * as userService from '../services/orioks.auth.service';
+import * as user from '../repositoryes/user.repository';
 
 export const createUser = async (req:Request, res:Response) => {
   try {

@@ -1,5 +1,5 @@
 {
-  "type": "module",
+  "type": "commonjs",
   "name": "db_service_oreooks",
   "version": "1.0.0",
   "description": "",
@@ -22,6 +22,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "prisma migrate deploy && node dist/index.js"
+    "build": "tsc",
+    "start": "node dist/index.js"
   }
 }

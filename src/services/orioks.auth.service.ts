@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { ORIOKS_AUTH_URL } from '../config/worker.config.js'
-import { createAuthHeader } from '../utils/worker.js'
+import { ORIOKS_AUTH_URL } from '../config/worker.config'
+import { createAuthHeader } from '../utils/worker'
 
 export const getToken = async (login:string, password:string) => {
 
