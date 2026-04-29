@@ -1,3 +1,13 @@
-import { PrismaClient } from '@prisma/client';
+import { DATABASE_URL } from "../config/worker.config";
+import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import pg from "pg";
 
-export const prisma = new PrismaClient();
+const pool = new pg.Pool({
+	connectionString: DATABASE_URL
+});
+
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
+
+export default prisma;

@@ -1,4 +1,4 @@
-import { prisma } from './db'
+import prisma from './db'
 
 export const createUser = ( tgId: number, token: string ) => {
   return prisma.user.create({
