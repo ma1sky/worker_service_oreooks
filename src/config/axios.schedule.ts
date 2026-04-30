@@ -8,7 +8,7 @@ export const createApi = (token: string) => {
     headers: {
       Accept: "application/json",
       Authorization: createTokenHeader(token),
-      "User-Agent": "bot_oreooks/0.1"
+      "User-Agent": "Oreooks-bot/1.0 Windows 11"
     }
   });
 };
