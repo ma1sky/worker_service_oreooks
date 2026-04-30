@@ -2,10 +2,10 @@ import prisma from "./db";
 import { Day } from "@prisma/client";
 import type { ScheduleDTO } from "../models/sсhedule.model";
 
-export const createSchedule = async (tgId: number, schedule: ScheduleDTO) => {
+export const createSchedule = async (tg_id: number, schedule: ScheduleDTO) => {
   return prisma.schedule.create({
     data: {
-      tgId,
+      tg_id,
       semester: schedule.semester,
       week: schedule.week,
       weekType: schedule.weekType,
@@ -47,10 +47,10 @@ export const getScheduleToday = async (
   });
 };
 
-export const scheduleExist = async (tgId: number): Promise<boolean> => {
+export const scheduleExist = async (tg_id: number): Promise<boolean> => {
   const schedule = await prisma.schedule.findFirst({
-    where: { tgId },
-    select: { tgId: true },
+    where: { tg_id },
+    select: { tg_id: true },
   });
 
   return !!schedule;

@@ -3,7 +3,7 @@ import prisma from './db';
 export const getTokenByTgId = async (tg_id: number): Promise<string | null> => {
   try {
     const user = await prisma.user.findUnique({
-      where: { tgId: tg_id },
+      where: { tg_id },
       select: {
         token: true,
       },
