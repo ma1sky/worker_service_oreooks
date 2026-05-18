@@ -5,7 +5,7 @@ import { createTokenHeader } from "../utils/schedule";
 export const createApi = (token: string) => {
   const api = axios.create({
     baseURL: ORIOKS_LINK,
-    timeout: 10000,
+    timeout: 3000,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",

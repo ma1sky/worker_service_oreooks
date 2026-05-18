@@ -81,18 +81,45 @@ export const getIdGroup = async (token: string, studentGroupName?: string): Prom
   const groups = await getGroups(token);
 
   if (studentGroupName) {
-    // Ищем группу по имени (точное или частичное совпадение)
     const normalizedTarget = studentGroupName.trim().toLowerCase();
+    console.error('[DEBUG] getIdGroup: searching for group:', normalizedTarget);
+    
+    // 1. Точное совпадение (с учетом регистра)
     let matchedGroup = groups.find(g => g.name && g.name.trim().toLowerCase() === normalizedTarget);
     
     if (!matchedGroup) {
-      // Попробуем частичное совпадение (например, "ДПК-20-007/4" vs "ДПК-20-007/4 (2020 г.)")
+      // 2. Частичное совпадение (группа содержит целевое имя)
       matchedGroup = groups.find(g => g.name && g.name.trim().toLowerCase().includes(normalizedTarget));
+    }
+    
+    if (!matchedGroup) {
+      // 3. Удаляем скобки и всё после них, затем сравниваем
+      matchedGroup = groups.find(g => {
+        if (!g.name) return false;
+        const cleanName = g.name.replace(/\s*\(.*\)/, '').trim().toLowerCase();
+        return cleanName === normalizedTarget;
+      });
+    }
+    
+    if (!matchedGroup) {
+      // 4. Ищем по префиксу (группа начинается с целевого имени)
+      matchedGroup = groups.find(g => g.name && g.name.trim().toLowerCase().startsWith(normalizedTarget));
+    }
+    
+    if (!matchedGroup) {
+      // 5. Ищем по совпадению без дефисов и специальных символов
+      const normalizedTargetSimple = normalizedTarget.replace(/[-\s]/g, '');
+      matchedGroup = groups.find(g => {
+        if (!g.name) return false;
+        const simpleName = g.name.replace(/[-\s]/g, '').toLowerCase();
+        return simpleName.includes(normalizedTargetSimple);
+      });
     }
 
     if (!matchedGroup) {
       console.error('[WARN] Cannot find group by name:', studentGroupName);
-      console.error('[WARN] Available groups:', groups.map(g => ({ id: g.id, name: g.name })));
+      console.error('[WARN] Available groups (first 10):', groups.slice(0, 10).map(g => ({ id: g.id, name: g.name })));
+      console.error('[WARN] Total groups count:', groups.length);
       // fallback to first group
     } else {
       console.error('[DEBUG] Matched group:', matchedGroup);
